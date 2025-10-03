@@ -1,13 +1,17 @@
 {
   "name": "my-todo-app",
   "version": "1.0.0",
-  "description": "A simple to-do list application",
+  "description": "A sophisticated to-do list application with modern UI",
   "main": "script.js",
   "scripts": {
-    "build": "echo 'Building the application...' && mkdir -p dist && cp index.html style.css script.js dist/",
-    "test": "echo 'Running tests...' && node test.js"
+    "build": "echo '🚀 Building the application...' && mkdir -p dist && cp index.html style.css script.js dist/ && echo '✅ Build completed!'",
+    "test": "echo '🧪 Running tests...' && node test.js",
+    "lint": "echo '🔍 Running code quality checks...' && npx eslint script.js || true"
   },
-  "keywords": ["todo", "jenkins", "pipeline"],
+  "keywords": ["todo", "jenkins", "pipeline", "web-app"],
   "author": "HashiniDeakin",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
 }
