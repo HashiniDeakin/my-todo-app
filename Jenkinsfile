@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo '🚀 Building the application...'
-                sh 'npm run build'
+                bat 'npm run build'
                 echo '✅ Build completed!'
             }
         }
@@ -13,7 +13,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo '🧪 Running tests...'
-                sh 'npm test'
+                bat 'npm test'
                 echo '✅ Tests completed!'
             }
         }
@@ -21,7 +21,7 @@ pipeline {
         stage('Code Quality') {
             steps {
                 echo '🔍 Running code quality checks...'
-                sh 'npm run lint'
+                bat 'npm run lint'
                 echo '✅ Code quality check completed!'
             }
         }
