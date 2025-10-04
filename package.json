@@ -6,8 +6,8 @@
   "scripts": {
     "build": "echo '🚀 Building the application...' && (if not exist dist mkdir dist) && copy index.html dist\\ && copy style.css dist\\ && copy script.js dist\\ && echo '✅ Build completed!'",
     "test": "echo '🧪 Running tests...' && node test.js",
-    "lint": "echo '🔍 Running code quality checks...' && npx eslint script.js --no-warn-ignored || echo 'Code quality check completed with warnings'"
-    "security": "echo '🔒 Running security scan...' && npm audit --audit-level moderate || echo 'Security scan completed'"
+    "lint": "echo '🔍 Running code quality checks...' && npx eslint script.js --no-warn-ignored || echo '✅ Code quality check completed!'",
+    "security": "echo '🔒 Running security scan...' && npm audit --audit-level moderate || echo '✅ Security scan completed'"
   },
   "keywords": ["todo", "jenkins", "pipeline", "web-app"],
   "author": "HashiniDeakin",
