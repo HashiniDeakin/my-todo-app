@@ -3,6 +3,11 @@ const { addTask, deleteTask, tasks } = require('./script.js');
 
 console.log('🧪 Starting tests...');
 
+// Reset tasks before each test run
+while(tasks.length > 0) {
+    tasks.pop();
+}
+
 // Test 1: Initial tasks should be empty
 console.log('Test 1: Initial tasks array should be empty');
 if (tasks.length === 0) {
@@ -35,13 +40,22 @@ if (addedTask.text === 'Test task from Jenkins') {
 
 // Test 4: Delete a task
 console.log('Test 4: Deleting a task should decrease tasks array');
-const taskIdToDelete = tasks[0].id;
+const taskIdToDelete = addedTask.id; // Use the ID from the task we just added
 const lengthBeforeDelete = tasks.length;
 deleteTask(taskIdToDelete);
 if (tasks.length === lengthBeforeDelete - 1) {
     console.log('✅ PASS: Task was deleted successfully');
 } else {
     console.log('❌ FAIL: Task was not deleted');
+    process.exit(1);
+}
+
+// Test 5: Verify empty after deletion
+console.log('Test 5: Tasks should be empty after deletion');
+if (tasks.length === 0) {
+    console.log('✅ PASS: Tasks array is empty after deletion');
+} else {
+    console.log('❌ FAIL: Tasks array should be empty after deletion');
     process.exit(1);
 }
 
