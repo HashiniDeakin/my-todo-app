@@ -4,7 +4,7 @@
   "description": "A sophisticated to-do list application with modern UI",
   "main": "script.js",
   "scripts": {
-    "build": "echo '🚀 Building the application...' && mkdir dist && copy index.html dist\\ && copy style.css dist\\ && copy script.js dist\\ && echo '✅ Build completed!'",
+    "build": "echo '🚀 Building the application...' && (if not exist dist mkdir dist) && copy index.html dist\\ && copy style.css dist\\ && copy script.js dist\\ && echo '✅ Build completed!'",
     "test": "echo '🧪 Running tests...' && node test.js",
     "lint": "echo '🔍 Running code quality checks...' && npx eslint script.js || true"
   },
