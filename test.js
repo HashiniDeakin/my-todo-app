@@ -1,48 +1,87 @@
-// Simple test file for our To-Do List application
-const { addTask, deleteTask, tasks } = require('./script.js');
+// Enhanced To-Do List Application - Testable Version
+let tasks = [];
 
-console.log('🧪 Starting tests...');
+function addTask(taskText) {
+    if (!taskText || taskText.trim() === "") {
+        throw new Error("Please enter a valid task!");
+    }
 
-// Test 1: Initial tasks should be empty
-console.log('Test 1: Initial tasks array should be empty');
-if (tasks.length === 0) {
-    console.log('✅ PASS: Tasks array is initially empty');
-} else {
-    console.log('❌ FAIL: Tasks array should be empty');
-    process.exit(1);
+    // Add task to our array
+    const newTask = {
+        id: Date.now(),
+        text: taskText.trim(),
+        completed: false
+    };
+    
+    tasks.push(newTask);
+    saveTasksToStorage();
+    return newTask;
 }
 
-// Test 2: Add a task
-console.log('Test 2: Adding a task should increase tasks array');
-const initialLength = tasks.length;
-addTask('Test task from Jenkins');
-if (tasks.length === initialLength + 1) {
-    console.log('✅ PASS: Task was added successfully');
-} else {
-    console.log('❌ FAIL: Task was not added');
-    process.exit(1);
+function deleteTask(id) {
+    tasks = tasks.filter(task => task.id !== id);
+    saveTasksToStorage();
 }
 
-// Test 3: Verify task content
-console.log('Test 3: Added task should have correct text');
-const addedTask = tasks[tasks.length - 1];
-if (addedTask.text === 'Test task from Jenkins') {
-    console.log('✅ PASS: Task text is correct');
-} else {
-    console.log('❌ FAIL: Task text is incorrect');
-    process.exit(1);
+function toggleTaskCompletion(id) {
+    const task = tasks.find(task => task.id === id);
+    if (task) {
+        task.completed = !task.completed;
+        saveTasksToStorage();
+    }
 }
 
-// Test 4: Delete a task
-console.log('Test 4: Deleting a task should decrease tasks array');
-const taskIdToDelete = tasks[0].id;
-const lengthBeforeDelete = tasks.length;
-deleteTask(taskIdToDelete);
-if (tasks.length === lengthBeforeDelete - 1) {
-    console.log('✅ PASS: Task was deleted successfully');
-} else {
-    console.log('❌ FAIL: Task was not deleted');
-    process.exit(1);
+function renderTasks() {
+    const taskList = document.getElementById('taskList');
+    if (!taskList) return; // Skip if not in browser
+    
+    if (tasks.length === 0) {
+        taskList.innerHTML = '<div class="empty-state">No tasks yet. Add one above!</div>';
+        return;
+    }
+
+    taskList.innerHTML = tasks.map(task => `
+        <li class="task-item">
+            <span class="task-text" style="text-decoration: ${task.completed ? 'line-through' : 'none'}; 
+                                          color: ${task.completed ? '#6c757d' : '#333'};"
+                  onclick="toggleTaskCompletion(${task.id})">
+                ${task.text}
+            </span>
+            <button class="delete-btn" onclick="deleteTask(${task.id})">Delete</button>
+        </li>
+    `).join('');
 }
 
-console.log('🎉 All tests passed successfully!');
+function saveTasksToStorage() {
+    if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('todoTasks', JSON.stringify(tasks));
+    }
+}
+
+function loadTasksFromStorage() {
+    if (typeof localStorage !== 'undefined') {
+        const savedTasks = localStorage.getItem('todoTasks');
+        if (savedTasks) {
+            tasks = JSON.parse(savedTasks);
+            renderTasks();
+        }
+    }
+}
+
+// Browser-specific code - only run in browser environment
+if (typeof document !== 'undefined') {
+    // Initialize the app when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        loadTasksFromStorage();
+    });
+
+    // Make functions available globally for HTML onclick handlers
+    window.addTask = addTask;
+    window.deleteTask = deleteTask;
+    window.toggleTaskCompletion = toggleTaskCompletion;
+}
+
+// Export for testing (important for our Jenkins pipeline!)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { addTask, deleteTask, toggleTaskCompletion, tasks };
+}
