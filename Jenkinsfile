@@ -41,6 +41,22 @@ pipeline {
                 echo '✅ Deployment completed!'
             }
         }
+
+       stage('Release') {
+            steps {
+                echo '🏷️ Promoting to production...'
+                bat 'npm run release'
+                echo '✅ Release completed!'
+            }
+        }
+
+                stage('Monitoring') {
+            steps {
+                echo '📊 Setting up monitoring...'
+                bat 'npm run monitor'
+                echo '✅ Monitoring activated!'
+            }
+        }
     }
     
     post {
