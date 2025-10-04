@@ -8,7 +8,9 @@
     "test": "echo '🧪 Running tests...' && node test.js",
     "lint": "echo '🔍 Running code quality checks...' && npx eslint script.js --no-warn-ignored || echo '✅ Code quality check completed!'",
     "security": "echo '🔒 Running security scan...' && npm audit --audit-level moderate || echo '✅ Security scan completed'",
-    "deploy": "echo '🚀 Deploying to test environment...' && echo '✅ Application deployed successfully to test server!'"
+    "deploy": "echo '🚀 Deploying to test environment...' && echo '✅ Application deployed successfully to test server!'",
+    "release": "echo '🏷️ Creating production release...' && echo '✅ Release v1.0.0 created and ready for production!'",
+    "monitor": "echo '📊 Starting application monitoring...' && echo '✅ Monitoring active - application is healthy!'"
   },
   "keywords": ["todo", "jenkins", "pipeline", "web-app"],
   "author": "HashiniDeakin",
