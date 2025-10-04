@@ -25,6 +25,14 @@ pipeline {
                 echo '✅ Code quality check completed!'
             }
         }
+
+        stage('Security') {
+            steps {
+                echo '🔒 Running security analysis...'
+                bat 'npm run security'
+                echo '✅ Security analysis completed!'
+            }
+        }
     }
     
     post {
