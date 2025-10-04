@@ -33,6 +33,14 @@ pipeline {
                 echo '✅ Security analysis completed!'
             }
         }
+
+        stage('Deploy') {
+            steps {
+                echo '🚀 Deploying to test environment...'
+                bat 'npm run deploy'
+                echo '✅ Deployment completed!'
+            }
+        }
     }
     
     post {
